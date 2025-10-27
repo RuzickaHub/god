@@ -1,318 +1,536 @@
-/* Hlavní CSS soubor pro UDF Dokumentaci
-  Používá CSS proměnné pro snadné přizpůsobení a tmavý režim.
-*/
-
+* { box-sizing: border-box; } body {margin: 0;}:root{--gjs-t-color-primary:#0ea5e9;--gjs-t-color-secondary:#22d3ee;--gjs-t-color-accent:#4f46e5;--gjs-t-color-success:#10b981;--gjs-t-color-warning:#f59e0b;--gjs-t-color-error:#ef4444;}.gjs-t-body{background-color:var(--bg-color-0);color:var(--text-color);font-family:'Inter', sans-serif;font-size:1rem;line-height:1.75rem;}.gjs-t-h1{color:var(--text-color-heading);font-family:'Plus Jakarta Sans', sans-serif;font-weight:700;font-size:1.5rem;line-height:2.5rem;}.gjs-t-h2{color:var(--text-color-heading);font-family:'Plus Jakarta Sans', sans-serif;font-weight:600;font-size:1.2rem;line-height:1.75rem;}.gjs-t-button{background-color:var(--gjs-t-color-primary);color:white;border-radius:0.3rem;}.gjs-t-link{color:var(--gjs-t-color-accent);text-decoration:underline;}.gjs-t-border{border-radius:0.3rem;border-color:#e0e0e0;}*{box-sizing:border-box;}body{margin:0;line-height:inherit;}
 :root {
-  /* Základní paleta (Světlý režim) */
-  --bg: #f9fafb; /* Světle šedé pozadí */
-  --surface: #ffffff; /* Bílé pozadí prvků */
-  --text: #0b1220; /* Tmavý text */
-  --muted: #4b5563; /* Tlumený text */
-  --accent: #6366f1; /* Hlavní barva (fialová) */
-  
-  /* Stíny a rámečky */
-  --border-color: #e5e7eb; /* Světle šedý rámeček */
-  --elev-1: 0 6px 18px rgba(11, 17, 32, 0.06); /* Jemný stín */
-  --shadow-subtle: 0 1px 2px rgba(11, 17, 32, 0.06);
-  
-  /* Ostatní */
-  --radius: 10px; /* Poloměr zaoblení */
-  --transition: 200ms cubic-bezier(.2, .8, .2, 1); /* Přechod */
+  --text-color: #333;
+  --text-color-light: #555;
+  --text-color-heading: #111;
+  --bg-color-0: #f7fafc;
+  --bg-color-1: #ffffff;
+  --bg-color-2: #e2e8f0;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --glass-color: rgba(255, 255, 255, 0.7);
+  --sidebar-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  --header-bg: rgba(255, 255, 255, 0.85);
+  --gjs-t-color-accent: #0ea5e9;
+  --gjs-t-color-secondary: #0ea5e9;
+}
+[data-theme="dark"] {
+  --text-color: #e2e8f0;
+  --text-color-light: #94a3b8;
+  --text-color-heading: #ffffff;
+  --bg-color-0: #1a1a2e;
+  --bg-color-1: #1f2a40;
+  --bg-color-2: #2d3e50;
+  --border-color: rgba(255, 255, 255, 0.1);
+  --glass-color: rgba(45, 62, 80, 0.7);
+  --sidebar-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  --header-bg: rgba(31, 42, 64, 0.85);
+  --gjs-t-color-accent: #38bdf8;
+  --gjs-t-color-secondary: #38bdf8;
 }
 
-/* Proměnné pro tmavý režim */
-body.dark {
-  --bg: #0d1117; /* Tmavě modré pozadí */
-  --surface: #0f1724; /* Tmavý povrch prvků */
-  --text: #e6eef8; /* Světlý text */
-  --muted: #9aa6b2; /* Tlumený světlý text */
-  --accent: #7c86ff; /* Světlejší fialová */
-  --border-color: #222b3b; /* Tmavý rámeček */
-  --elev-1: 0 6px 18px rgba(0, 0, 0, 0.6);
-  --shadow-subtle: 0 1px 2px rgba(0, 0, 0, 0.5);
+.app-wrapper{
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--bg-color-0);
+  position: relative;
+  overflow: hidden;
+  max-width: 100vw;
+}
+.background-gradient {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top left, var(--gjs-t-color-secondary) 0%, transparent 40%), 
+              radial-gradient(circle at bottom right, var(--gjs-t-color-accent) 0%, transparent 40%);
+  opacity: 0.1;
+  z-index: 0;
+}
+.background-shape-top-left, .background-shape-bottom-right, .background-shape-mid {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  filter: blur(80px);
+  opacity: 0.2;
+  z-index: 0;
+}
+.background-shape-top-left {
+  top: -100px;
+  left: -100px;
+  background-color: var(--gjs-t-color-secondary);
+}
+.background-shape-bottom-right {
+  bottom: -100px;
+  right: -100px;
+  background-color: var(--gjs-t-color-accent);
+}
+.background-shape-mid {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 400px;
+  height: 400px;
+  background-color: var(--gjs-t-color-primary);
+  opacity: 0.1;
 }
 
-/* Globální reset a základní nastavení */
-* {
-  box-sizing: border-box;
-}
-
-body {
-  margin: 0;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-  background: var(--bg);
-  color: var(--text);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  transition: background-color var(--transition), color var(--transition);
-}
-
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-/* --- Horní lišta (Header) --- */
-.site-header {
+/* Header */
+.header-bar {
   position: sticky;
   top: 0;
-  z-index: 40;
-  width: 100%;
-  background: var(--surface);
+  z-index: 20;
+  background-color: var(--header-bg);
+  backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border-color);
-  box-shadow: var(--shadow-subtle);
-  transition: background-color var(--transition), border-color var(--transition);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  min-height: 54px;
 }
-
-.header-inner {
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
   display: flex;
-  align-items: center;
   justify-content: space-between;
-  height: 64px;
+  align-items: center;
+  height: 54px;
 }
-
-.brand {
+.logo-link {
   display: flex;
   align-items: center;
-  gap: 12px;
-}
-
-.logo {
-  width: 40px;
-  height: 40px;
-  border-radius: 8px;
-}
-
-.brand-text .title {
+  font-family: 'Plus Jakarta Sans', sans-serif;
   font-weight: 700;
-  color: var(--text);
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: var(--text-color-heading);
 }
-
-.brand-text .subtitle {
-  font-size: 13px;
-  color: var(--muted);
+.logo-link img {
+  width: 30px;
+  height: 30px;
+  margin-right: 0.5rem;
 }
-
-.header-actions {
+.header-tools {
   display: flex;
-  align-items: center;
+  gap: 0.5rem;
 }
-
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  width: 40px;
-  height: 40px;
+.header-tool-btn {
+  background: none;
+  border: none;
   cursor: pointer;
-  font-size: 20px;
-  line-height: 1;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition);
 }
-.theme-toggle:hover {
-  background-color: var(--bg);
-  border-color: var(--accent);
+.header-tool-btn:hover {
+  background-color: var(--bg-color-2);
+}
+.header-tool-btn img {
+  filter: var(--svg-filter, invert(1)); /* Default filter for dark icons on light/dark mode */
+  width: 18px;
+  height: 18px;
+}
+[data-theme="light"] .header-tool-btn img {
+  filter: invert(0); /* Icons are black in light mode */
 }
 
-/* --- Hlavní layout (Sidebar + Content) --- */
-.layout {
-  display: flex;
-  gap: 24px;
-  padding-top: 24px;
-}
-
-/* --- Postranní panel (Sidebar) --- */
-.sidebar {
+/* Sidebar */
+.sidebar-wrapper {
+  position: fixed;
+  top: 54px; /* Header height */
+  left: 0;
+  bottom: 0;
   width: 280px;
-  flex-shrink: 0;
-  position: sticky;
-  top: 88px; /* 64px header + 24px padding */
-  height: calc(100vh - 112px); /* 100vh - header - padding-top - padding-bottom */
+  z-index: 30;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease-in-out;
+  background-color: var(--glass-color);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid var(--border-color);
+  box-shadow: var(--sidebar-shadow);
   overflow-y: auto;
 }
-
-.sidebar-inner {
+.sidebar-wrapper.is-visible {
+  transform: translateX(0);
+}
+.sidebar-container {
+  padding: 1rem 0;
+}
+.sidebar-tools {
+  padding: 0 1rem;
   display: flex;
-  flex-direction: column;
-  height: 100%;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+.sidebar-tool-btn {
+  background-color: var(--bg-color-1);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  cursor: pointer;
+  padding: 0.375rem 0.75rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.sidebar-tool-btn:hover {
+  background-color: var(--bg-color-2);
+}
+.sidebar-tool-btn img {
+  width: 18px;
+  height: 18px;
+  filter: var(--svg-filter, invert(1));
+}
+[data-theme="light"] .sidebar-tool-btn img {
+  filter: invert(0);
 }
 
-.navlist {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  margin-top: 16px;
+.sidebar-search-wrapper {
+  padding: 0 1rem;
+  margin-bottom: 1rem;
+}
+.sidebar-search {
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 0.5rem;
+  background-color: var(--bg-color-1);
+  color: var(--text-color);
 }
 
-.navlist a {
+/* Navigation */
+.nav-heading {
   display: block;
-  padding: 10px 12px;
-  border-radius: var(--radius);
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  color: var(--gjs-t-color-accent);
+  padding: 0.5rem 1rem;
   text-decoration: none;
-  color: var(--muted);
-  font-weight: 500;
-  transition: all var(--transition);
-  border: 1px solid transparent;
+  transition: background-color 0.2s;
 }
-
-.navlist a:hover {
-  color: var(--text);
-  background: var(--bg);
+.folder {
+  margin-bottom: 0.25rem;
 }
-
-.navlist a.active {
-  color: var(--accent);
-  background: var(--bg);
-  border-color: var(--border-color);
+.folder-toggle {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  text-align: left;
+  padding: 0.5rem 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--text-color);
+  transition: background-color 0.2s;
+}
+.folder-toggle:hover {
+  background-color: var(--bg-color-2);
+}
+.folder.is-open > .folder-toggle {
+  background-color: var(--bg-color-2);
+}
+.folder-toggle .gjs-t-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+  transition: transform 0.2s;
+  filter: var(--svg-filter, invert(1));
+}
+.folder-toggle .folder-icon {
+  display: none;
+}
+.folder-toggle .folder-icon-closed {
+  display: block;
+}
+.folder.is-open > .folder-toggle .gjs-t-icon:first-child {
+  transform: rotate(90deg);
+}
+.folder.is-open > .folder-toggle .folder-icon {
+  display: block;
+}
+.folder.is-open > .folder-toggle .folder-icon-closed {
+  display: none;
+}
+.folder-children {
+  display: none;
+  overflow: hidden;
+  padding-left: 0.5rem;
+  border-left: 2px solid var(--border-color);
+  margin-left: 1.125rem;
+}
+.folder.is-open > .folder-children {
+  display: block;
+}
+.folder.is-filtered > .folder-children {
+    display: block !important;
+}
+.folder-children-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.25rem 0;
+}
+.nav-file {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  color: var(--text-color-light);
+  font-size: 0.95rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s, color 0.2s;
+}
+.nav-file:hover {
+  background-color: var(--bg-color-2);
+  color: var(--text-color);
+}
+.nav-file.is-active {
+  background-color: var(--gjs-t-color-accent);
+  color: white;
   font-weight: 600;
 }
-
-/* --- Hlavní obsah (Content) --- */
-.content {
-  flex: 1;
-  min-width: 0; /* Důležité pro flexbox a zalamování obsahu */
+.nav-file.is-active .gjs-t-icon {
+  filter: invert(1);
+}
+.nav-file .gjs-t-icon {
+  width: 16px;
+  height: 16px;
+  margin-right: 0.5rem;
+  filter: var(--svg-filter, invert(1));
 }
 
-/* Stylování obsahu z Markdown */
-.prose {
-  background: var(--surface);
-  padding: 28px;
-  border-radius: var(--radius);
-  box-shadow: var(--elev-1);
+/* Viewer */
+.od-viewer {
+  display: none; /* Controlled by JS */
+  flex-grow: 1;
+  padding: 1rem;
+  margin-left: 0;
+  transition: margin-left 0.3s ease-in-out;
+  position: relative;
+  z-index: 10;
+  overflow-y: auto;
+  min-height: calc(100vh - 54px);
+}
+.od-viewer.is-visible {
+  display: flex;
+  flex-direction: column;
+}
+.od-viewer-inner {
+  max-width: 800px;
+  margin: 0 auto;
+  background-color: var(--glass-color);
+  backdrop-filter: blur(8px);
   border: 1px solid var(--border-color);
-  transition: all var(--transition);
+  border-radius: 1rem;
+  padding: 2rem;
+  position: relative;
 }
-
-.prose h1, .prose h2, .prose h3 {
-  color: var(--text);
-  margin-top: 1.2em;
-  margin-bottom: 0.5em;
-  font-weight: 700;
+.od-viewer-title {
+  margin-top: 0;
+  border-bottom: 2px solid var(--border-color);
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
 }
-.prose h1 { font-size: 2.25rem; }
-.prose h2 { font-size: 1.875rem; }
-.prose h3 { font-size: 1.5rem; }
-
-.prose p {
-  color: var(--muted);
-  line-height: 1.6;
-  margin-bottom: 1em;
+.od-viewer-content * {
+  max-width: 100%;
 }
-
-.prose a {
-  color: var(--accent);
+.od-viewer-content h2 {
+  font-size: 1.5rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.od-viewer-content p {
+  margin-bottom: 1rem;
+}
+.od-viewer-content a {
+  color: var(--gjs-t-color-accent);
+  text-decoration: none;
+  font-weight: 500;
+}
+.od-viewer-content a:hover {
   text-decoration: underline;
 }
 
-.prose code {
-  background: rgba(124, 134, 255, 0.1);
-  color: var(--accent);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: monospace;
+.od-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border-color);
 }
-
-.prose pre {
-  background: rgba(2, 6, 23, 0.03);
-  padding: 12px;
-  border-radius: 8px;
-  overflow-x: auto;
+.od-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: var(--bg-color-1);
+  color: var(--text-color);
   border: 1px solid var(--border-color);
-}
-.prose pre code {
-  background: transparent;
-  color: inherit;
-  padding: 0;
-}
-
-body.dark .prose pre {
-  background: rgba(255, 255, 255, 0.03);
-}
-
-.prose blockquote {
-  border-left: 3px solid var(--accent);
-  padding-left: 12px;
-  margin-left: 0;
-  font-style: italic;
-  color: var(--muted);
-}
-
-/* --- Mobilní zobrazení --- */
-.mobile-menu-btn, .mobile-menu-close {
-  display: none; /* Skryto na desktopu */
-  background: transparent;
-  border: 1px solid var(--border-color);
-  border-radius: var(--radius);
-  width: 40px;
-  height: 40px;
   cursor: pointer;
-  font-size: 24px;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  transition: background-color 0.2s;
+  text-decoration: none;
+}
+.od-action-btn:hover {
+  background-color: var(--bg-color-2);
+}
+.od-action-btn img {
+  filter: var(--svg-filter, invert(1));
+  width: 16px;
+  height: 16px;
+}
+.od-action-back {
+  visibility: hidden; /* Default state, adjusted by JS */
+}
+.od-action-next {
+  visibility: hidden; /* Default state, adjusted by JS */
+}
+.od-close-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.5rem;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+  z-index: 10;
+  display: none;
+}
+.od-close-btn:hover {
+  background-color: var(--bg-color-2);
+}
+.od-close-btn img {
+  filter: var(--svg-filter, invert(1));
+  width: 18px;
+  height: 18px;
 }
 
-.sidebar-brand { display: none; } /* Skryto na desktopu */
-.logo-sm { width: 32px; height: 32px; border-radius: 6px; }
-.brand-text-sm .title-sm { font-weight: 700; }
-.brand-text-sm .subtitle-sm { font-size: 12px; color: var(--muted); }
-.sidebar-footer { margin-top: auto; padding-top: 16px; }
-
-/* Překrytí (Overlay) pro mobilní menu */
-.overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.35);
-  z-index: 50;
-  transition: opacity var(--transition);
-}
-.overlay.hidden {
-  opacity: 0;
-  pointer-events: none;
-}
-
-/* Responzivní breakpoint pro mobil */
-@media (max-width: 1024px) {
-  .mobile-menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .logo { display: none; } /* Skrýt velké logo na mobilu */
-  .brand-text { display: none; } /* Skrýt velký text na mobilu */
-
-  .sidebar {
+/* Back to Top Button */
+#od-backtop {
     position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    z-index: 60;
-    width: 300px;
-    background: var(--surface);
-    border-right: 1px solid var(--border-color);
-    transform: translateX(-100%);
-    transition: transform var(--transition);
-    padding: 24px;
-    height: 100vh;
-  }
+    right: 1rem;
+    bottom: 1rem;
+    background-color: var(--gjs-t-color-accent);
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 50%;
+    padding: 0.5rem;
+    width: 40px;
+    height: 40px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 50;
+}
+#od-backtop.is-visible {
+    opacity: 1;
+    visibility: visible;
+}
+#od-backtop img {
+    filter: invert(1);
+}
 
-  .sidebar.open {
+/* Backdrop for small screens */
+.sidebar-backdrop {
+  position: fixed;
+  top: 54px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 25;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: none;
+}
+.sidebar-backdrop.is-visible {
+  display: block;
+}
+
+/* Media Queries */
+@media (min-width: 1024px) {
+  /* Desktop: Sidebar always visible, viewer shifted */
+  .sidebar-wrapper {
+    position: sticky;
+    top: 54px;
     transform: translateX(0);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    width: 280px;
+    flex-shrink: 0;
+    max-height: calc(100vh - 54px);
   }
+  .header-tools .toggle-sidebar {
+    display: none;
+  }
+  .sidebar-backdrop {
+    display: none !important;
+  }
+  .od-viewer {
+    margin-left: 0; /* Aligned with main content */
+    padding: 2rem;
+  }
+  .od-close-btn {
+    display: none !important;
+  }
+  .app-wrapper {
+    flex-direction: row;
+  }
+}
 
-  .sidebar-brand {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding-bottom: 16px;
-    border-bottom: 1px solid var(--border-color);
+@media (max-width: 1023px) {
+  /* Tablet/Mobile: Fullscreen viewer, hidden sidebar */
+  .od-viewer {
+    position: fixed;
+    top: 54px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow-y: auto;
+    z-index: 40;
+    background-color: var(--bg-color-0);
+    padding: 1rem;
   }
-  
-  .mobile-menu-close {
+  .od-viewer-inner {
+    padding: 1rem;
+    max-width: none;
+    border: none;
+    backdrop-filter: none;
+    background-color: transparent;
+  }
+  .od-close-btn {
     display: block;
-    width: 100%;
-    color: var(--text);
   }
+}
+
+/* Dark Mode Specific Filters */
+[data-theme="dark"] .header-tool-btn img,
+[data-theme="dark"] .sidebar-tool-btn img,
+[data-theme="dark"] .folder-toggle .gjs-t-icon,
+[data-theme="dark"] .nav-file .gjs-t-icon,
+[data-theme="dark"] .od-action-btn img,
+[data-theme="dark"] .od-close-btn img {
+    filter: invert(1);
+}
+[data-theme="light"] .header-tool-btn img,
+[data-theme="light"] .sidebar-tool-btn img,
+[data-theme="light"] .folder-toggle .gjs-t-icon,
+[data-theme="light"] .nav-file .gjs-t-icon,
+[data-theme="light"] .od-action-btn img,
+[data-theme="light"] .od-close-btn img {
+    filter: invert(0);
+}
+.nav-file.is-active .gjs-t-icon {
+    filter: invert(1) !important;
+}
+#od-backtop img {
+    filter: invert(1) !important;
 }
