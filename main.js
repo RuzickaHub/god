@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- KONFIGURACE ---
     
     // TODO: Upravte na URL vašeho repozitáře
-    const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/VASEJMENO/VASREPO/main/docs/';
+    const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/RuzickaHub/god/main/docs/';
     
     // Seznam stránek pro navigaci
     const PAGES = [
