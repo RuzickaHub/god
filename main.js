@@ -4,7 +4,7 @@
 */
 
 // Konstanta pro základní URL GitHub repozitáře, odkud se stahují .md soubory
-const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/RuzickaHub/UDF/main/docs/';
+const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/RuzickaHub/god/main/docs/';
 
 // Definice stránek a jejich souborů
 const PAGES = [
@@ -69,7 +69,7 @@ function setActiveLinkFromHash() {
  * @returns {Promise<string>} - Textový obsah Markdown souboru.
  */
 async function fetchMarkdown(file) {
-  const url = GITHUB_RAW_BASE + file;
+  const url =  + file;
   try {
     const res = await fetch(url);
     if (!res.ok) throw new Error('Remote not available');
